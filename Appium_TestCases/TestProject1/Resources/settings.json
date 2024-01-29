@@ -1,0 +1,63 @@
+{
+  "platformName": "android",
+  "isRemote": false,
+  "remoteConnectionUrl": "http://127.0.0.1:4723/wd/hub",
+  "screensLocation": "./Resources/AndroidSetUp",
+
+  "driverSettings": {
+    "android": {
+      "deviceKey": "Android_Emulator",
+      "capabilities": {
+        "app": "./Resources/Apps/mastodon-2-2-4.apk",
+        "platformName": "Android",
+        "automationName": "uiautomator2"
+      }
+    },
+    "ios": {
+      "deviceKey": "<KEY_OF_IOS_DEVICE_FROM_DEVICES_JSON>",
+      "capabilities": {
+        "app": "./Resources/Apps/TestApp.app.zip",
+        "platformName": "iOS",
+        "automationName": "XCUITest"
+      }
+    }
+  },
+  "localServiceSettings": {
+    "arguments": {
+      "--allow-insecure": "chromedriver_autodownload"
+    },
+    "capabilities": {
+    }
+  },
+  "timeouts": {
+    "timeoutImplicit": 0,
+    "timeoutCondition": 15,
+    "timeoutPollingInterval": 300,
+    "timeoutCommand": 120
+  },
+  "retry": {
+    "number": 2,
+    "pollingInterval": 300
+  },
+  "logger": {
+    "language": "en",
+    "logPageSource": true
+  },
+  "elementCache": {
+    "isEnabled": true
+  },
+  "touchActions": {
+    "swipe": {
+      "duration": 1,
+      "retries": 5,
+      "verticalOffset": 0.2,
+      "horizontalOffset": 0.5
+    }
+  },
+  "visualization": {
+    "defaultThreshold": 0.012,
+    "comparisonWidth": 16,
+    "comparisonHeight": 16,
+    "pathToDumps": "../../../Resources/VisualDumps/"
+  }
+}

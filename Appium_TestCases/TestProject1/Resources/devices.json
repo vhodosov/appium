@@ -1,0 +1,9 @@
+﻿{
+  "Android_Emulator": {
+    "capabilities": {
+      "deviceName": "Pixel 7 Pro",
+      "platformVersion": "13.0",
+      "udid": "emulator-5554"
+    }
+  }
+}
