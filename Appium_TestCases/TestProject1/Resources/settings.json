@@ -10,7 +10,10 @@
       "capabilities": {
         "app": "./Resources/Apps/mastodon-2-2-4.apk",
         "platformName": "Android",
-        "automationName": "uiautomator2"
+        "automationName": "uiautomator2",
+        "unicodeKeyboard": true,
+        "resetKeyboard": true,
+        "allowInvisibleElements": true
       }
     },
     "ios": {

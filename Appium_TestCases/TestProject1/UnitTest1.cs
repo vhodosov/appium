@@ -83,7 +83,7 @@ namespace TestProject1
             Assert.IsTrue(postsScreen.IsPostsTestsTitlePresent(), "tests post results is not shown");
 
             _logger.Info("Scroll down to the fourth post");
-            postsScreen.ScrollToFourthPost();
+            postsScreen.ScrollToSpecificElement(4);
         }
 
         [Test]

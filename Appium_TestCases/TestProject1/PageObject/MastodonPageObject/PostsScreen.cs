@@ -1,7 +1,12 @@
-﻿using Aquality.Appium.Mobile.Applications;
+﻿using Aquality.Appium.Mobile.Actions;
+using Aquality.Appium.Mobile.Applications;
 using Aquality.Appium.Mobile.Elements.Interfaces;
+using Aquality.Selenium.Core.Elements;
+using Aquality.Selenium.Core.Elements.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Interactions;
+using System.Drawing;
 using TestProject1.Enums;
 
 namespace TestProject1.PageObject.MastodonPageObject
@@ -12,19 +17,24 @@ namespace TestProject1.PageObject.MastodonPageObject
         private const string searchLabelLocator = "//android.widget.TextView[@resource-id='org.joinmastodon.android:id/title' and contains(@text, '{0}')]";
         private readonly ITextBox searchTextBox = ElementFactory.GetTextBox(By.Id("org.joinmastodon.android:id/search_text"), "Search text box");
         private readonly ITextBox searchAfterClickTextBox = ElementFactory.GetTextBox(By.XPath("//android.widget.EditText[@text='Search Mastodon']"), "Search text box");
-        private readonly ILabel postLabel = ElementFactory.GetLabel(By.XPath("//android.widget.TextView[@resource-id='org.joinmastodon.android:id/text']"), "Post label");
+        private readonly ILabel postLabel = ElementFactory.GetLabel(By.XPath("(//android.widget.TextView[@resource-id='org.joinmastodon.android:id/text'])[1]"), "Post label", state: ElementState.ExistsInAnyState);
         private readonly ILabel postsTestTitleLabel = ElementFactory.GetLabel(By.XPath("//android.widget.TextView[@resource-id='org.joinmastodon.android:id/title' and @text='#tests']"), "Posts tests title label");
 
         public PostsScreen() : base(By.Id("org.joinmastodon.android:id/discover_posts"), "Posts Screen")
         {
         }
 
-        public void ScrollToFourthPost()
+        public void ScrollToSpecificElement(int number)
         {
-            var elements = ElementFactory.FindElements<ILabel>(By.XPath(postLabel.Locator.Criteria));
+            ElementFactory.GetLabel(By.XPath(string.Format("(//android.widget.TextView[@resource-id='org.joinmastodon.android:id/text'])[{0}]", number.ToString())), "Post label", state: ElementState.ExistsInAnyState).TouchActions.ScrollToElement(SwipeDirection.Down);
+        }
 
-            var touchAction = new TouchAction(AqualityServices.Application.Driver);
-            touchAction.MoveTo(elements[3].GetElement()).Perform();
+        public void SwipeToFirstPost()
+        {            
+            do
+            {
+                new TouchActions().SwipeWithLongPress(new Point(720, 624), new Point(720, 2496));
+            } while (postLabel.State.IsClickable);            
         }
 
         public bool IsPostsTestsTitlePresent()
@@ -45,6 +55,11 @@ namespace TestProject1.PageObject.MastodonPageObject
         public void TapSearch()
         {
             searchTextBox.Click();
+        }
+
+        public void CloseSearch()
+        {
+            searchAfterClickTextBox.SendKeys(Keys.Enter);
         }
 
         public string GetPositionForSearch()
